@@ -2,3 +2,4 @@ All members of the github must prove that they have git working on their machine
 Please use git to modify this file, add your name below, commit to master, then push to the repository.
 
 Chris Hill c:
+Cary Rybalchenko
