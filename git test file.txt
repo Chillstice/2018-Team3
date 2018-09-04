@@ -4,3 +4,4 @@ Please use git to modify this file, add your name below, commit to master, then 
 Chris Hill c:
 Cary Rybalchenko
 Kevin Valenzuela.
+Tanner Rosner 
