@@ -1,0 +1,4 @@
+All members of the github must prove that they have git working on their machines by modifying this file.
+Please use git to modify this file, add your name below, commit to master, then push to the repository.
+
+Chris Hill c:
