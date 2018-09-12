@@ -1,0 +1,46 @@
+body { 
+	background-color: black;
+	padding: 0;
+	margin: 0;
+}
+
+.wrap {
+	width: 940px;
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+header {
+	height: 150px;
+	background-color: blue;
+}
+
+.clr {
+	clear: both;
+}
+
+.logo {
+	width: 168px;
+	height: 91px;
+	float: left;
+	/*background; url('..images/icon.png');*/
+}
+
+.nav{
+	padding:0;
+	margin:0;
+}
+
+.nav ul {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.nal ul li {
+	width: 188px
+	text-align: center;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
