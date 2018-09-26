@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\home",
+    "\\home\\static",
+    "\\home\\static\\css",
+    "\\home\\templates",
+    "\\home\\templates\\home",
+    "\\team3"
   ],
+  "SelectedNode": "\\home\\static\\css\\maps.css",
   "PreviewInSolutionExplorer": false
 }
