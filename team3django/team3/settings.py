@@ -56,7 +56,7 @@ ROOT_URLCONF = 'team3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'user.CustomUser'
+LOGIN_REDIRCT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+
