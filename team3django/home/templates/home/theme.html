@@ -2,82 +2,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Where's The Beef</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Where's The Beef</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-    <!-- Favicons
-        ================================================== -->
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico" type="image/x-icon' %}">
-    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
+	<!-- Favicons
+		================================================== -->
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico" type="image/x-icon' %}">
+	<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
 
-    <!-- Stylesheet
-        ================================================== -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/nivo-lightbox.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/default.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
+	<!-- Stylesheet
+		================================================== -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/nivo-lightbox.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/default.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
 
-    <!--Google Maps Stylesheet
-        ================================================= -->
-    <!--<link rel="stylesheet"  href="static/css/maps.css" />-->
-    <!--Google Maps API-->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?AIzaSyBzRN6kzyDviOXYpHIvtc5K9AYWyUOkpwI&callback=initMap"></script>
-    <!--<script>
-        var map;
+	<!--Google Maps Stylesheet
+		================================================= -->
+	<!--<link rel="stylesheet"  href="static/css/maps.css" />-->
 
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 39.742043, lng: -104.991531 }, zoom: 10
-            });
-        }
+	<script async defer src="https://maps.googleapis.com/maps/api/js?AIzaSyBzRN6kzyDviOXYpHIvtc5K9AYWyUOkpwI&callback=initMap"></script>
 
-    </script>-->
-
-    <script>
-        // Initialize and add the map
-        function initMap() {
-            // The location of Uluru
-            var uluru = { lat: -25.344, lng: 131.036 };
-            // The map, centered at Uluru
-            var map = new google.maps.Map(
-                document.getElementById('map'), { zoom: 4, center: uluru });
-            // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({ position: uluru, map: map });
-        }
-    </script>
+	<script>
+		// Initialize and add the map
+		function initMap() {
+			// The location of Uluru
+			var uluru = { lat: -25.344, lng: 131.036 };
+			// The map, centered at Uluru
+			var map = new google.maps.Map(
+				document.getElementById('map'), { zoom: 4, center: uluru });
+			// The marker, positioned at Uluru
+			var marker = new google.maps.Marker({ position: uluru, map: map });
+		}
+	</script>
 
 
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-        #map {
-            /* Always set the map height explicitly to define the size of the div
-                * element that contains the map. */
-            height: 80vh;
-            width: 100%;
-            background-color: grey;
-        }
-    </style>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+		#map {
+			/* Always set the map height explicitly to define the size of the div
+				* element that contains the map. */
+			height: 80vh;
+			width: 100%;
+			background-color: grey;
+		}
+	</style>
+
+	<!--Google Maps Search Forms CSS-->
+	<style>
+		input[type=checkbox] + label {
+			display: block;
+			margin: 0.2em;
+			cursor: pointer;
+			padding: 0.2em;
+		}
+
+		input[type=checkbox] {
+			display: none;
+		}
+
+			input[type=checkbox] + label:before {
+				content: "\2714";
+				border: 0.1em solid #000;
+				border-radius: 0.2em;
+				display: inline-block;
+				width: 1em;
+				height: 1em;
+				padding-left: 0.2em;
+				padding-bottom: 0.3em;
+				margin-right: 0.2em;
+				vertical-align: bottom;
+				color: transparent;
+				transition: .2s;
+			}
+
+			input[type=checkbox] + label:active:before {
+				transform: scale(0);
+			}
+
+			input[type=checkbox]:checked + label:before {
+				background-color: MediumSeaGreen;
+				border-color: MediumSeaGreen;
+				color: #fff;
+			}
+
+			input[type=checkbox]:disabled + label:before {
+				transform: scale(1);
+				border-color: #aaa;
+			}
+
+			input[type=checkbox]:checked:disabled + label:before {
+				transform: scale(1);
+				background-color: #bfb;
+				border-color: #bfb;
+			}
+	</style>
+	
 
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 	<!-- Navigation
@@ -120,27 +162,27 @@
 		</div>
 	</header>
 	<!-- About Section -->
-	<div id="map"></div>
 
-
-	<!--<div id="about">
+	<div id="about">
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-md-6 ">
-					<div class="about-img"><img src="{% static 'img/about.jpg' %}" class="img-responsive" alt=""></div>
-				</div>
-				<div class="col-xs-12 col-md-6">
-					<div class="about-text">
 
+			Ideal Spending Amount: <br>
 
+			<form>
+				<input type="checkbox" id="box1" name="box-1" value="1-20$">
+				<label for="box1">1-20$</label>
+				<input type="checkbox" id="box2" name="box-2" value="21-50$">
+				<label for="box2">21-50$</label>
+				<input type="checkbox" id="box3" name="box-3" value="50+$">
+				<label for="box3">50+$</label>
+			</form>
 
-					</div>
-				</div>
-			</div>
 		</div>
-	</div>-->
+
+		<div id="map"></div>
+	</div>
 	<!-- Restaurant Menu Section -->
-	<!--<div id="restaurant-menu">
+	<div id="restaurant-menu">
 		<div class="section-title text-center center">
 			<div class="overlay">
 				<h2>Menu</h2>
@@ -258,9 +300,9 @@
 				</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 	<!-- Portfolio Section -->
-	<!--<div id="portfolio">
+	<div id="portfolio">
 		<div class="section-title text-center center">
 			<div class="overlay">
 				<h2>Gallery</h2>
@@ -433,7 +475,7 @@
 				</div>
 			</div>
 		</div>
-	</div>-->
+	</div>
 	<!-- Team Section -->
 	<div id="team" class="text-center">
 		<div class="overlay">
@@ -476,11 +518,11 @@
 		</div>
 	</div>
 	<!-- Call Reservation Section -->
-	<!--<div id="call-reservation" class="text-center">
+	<div id="call-reservation" class="text-center">
 		<div class="container">
 			<h2>Want to make a reservation? Call <strong>1-887-654-3210</strong></h2>
 		</div>
-	</div>-->
+	</div>
 	<!-- Contact Section -->
 	<div id="contact" class="text-center">
 		<div class="container">
