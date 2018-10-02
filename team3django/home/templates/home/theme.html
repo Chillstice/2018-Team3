@@ -21,6 +21,7 @@
 
 	<!-- Stylesheet
 		================================================== -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/searchfilters.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/nivo-lightbox.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/nivo-lightbox/default.css' %}">
@@ -60,59 +61,6 @@
 			background-color: grey;
 		}
 	</style>
-
-	<!--Google Maps Search Forms CSS-->
-	<style>
-		input[type=checkbox] + label {
-			display: block;
-			margin: 0.2em;
-			cursor: pointer;
-			padding: 0.2em;
-		}
-
-		input[type=checkbox] {
-			display: none;
-		}
-
-			input[type=checkbox] + label:before {
-				content: "\2714";
-				border: 0.1em solid #000;
-				border-radius: 0.2em;
-				display: inline-block;
-				width: 1em;
-				height: 1em;
-				padding-left: 0.2em;
-				padding-bottom: 0.3em;
-				margin-right: 0.2em;
-				vertical-align: bottom;
-				color: transparent;
-				transition: .2s;
-			}
-
-			input[type=checkbox] + label:active:before {
-				transform: scale(0);
-			}
-
-			input[type=checkbox]:checked + label:before {
-				background-color: MediumSeaGreen;
-				border-color: MediumSeaGreen;
-				color: #fff;
-			}
-
-			input[type=checkbox]:disabled + label:before {
-				transform: scale(1);
-				border-color: #aaa;
-			}
-
-			input[type=checkbox]:checked:disabled + label:before {
-				transform: scale(1);
-				background-color: #bfb;
-				border-color: #bfb;
-			}
-	</style>
-	
-
-
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -165,18 +113,56 @@
 
 	<div id="about">
 		<div class="container">
+			<div class="col-md-10 col-lg-4">
+				Ideal Spending Amount: <br>
 
-			Ideal Spending Amount: <br>
+				<form>
+					<input type="checkbox" id="box1" name="box-1" value="1-20$">
+					<label for="box1">1-20$</label>
+					<input type="checkbox" id="box2" name="box-2" value="21-50$">
+					<label for="box2">21-50$</label>
+					<input type="checkbox" id="box3" name="box-3" value="50+$">
+					<label for="box3">50+$</label>
+				</form>
 
-			<form>
-				<input type="checkbox" id="box1" name="box-1" value="1-20$">
-				<label for="box1">1-20$</label>
-				<input type="checkbox" id="box2" name="box-2" value="21-50$">
-				<label for="box2">21-50$</label>
-				<input type="checkbox" id="box3" name="box-3" value="50+$">
-				<label for="box3">50+$</label>
-			</form>
+			</div>
 
+			<div class="col-md-10 col-lg-4">
+				Type of Restaurant: <br>
+				<form>
+					<input type="checkbox" id="box4" name="box-4" value="Sit Down">
+					<label for="box4">Sit-Down</label>
+					<input type="checkbox" id="box5" name="box-5" value="Fast Food">
+					<label for="box5">Fast Food</label>
+				</form>
+
+			</div>
+
+			<div class="col-xs-12 col-lg-4">
+				Type of Food: <br>
+				<form>
+					<input type="checkbox" id="box6" name="box-6" value="Mexican">
+					<label for="box6">Mexican</label>
+					<input type="checkbox" id="box7" name="box-7" value="Steak House">
+					<label for="box7">Steak House</label>
+					<input type="checkbox" id="box8" name="box-8" value="Asian">
+					<label for="box8">Asian</label>
+					<input type="checkbox" id="box9" name="box-9" value="AllYouCanEat">
+					<label for="box9">All You Can Eat</label>
+					<input type="checkbox" id="box10" name="box-10" value="Breakfast">
+					<label for="box10">Breakfast</label>
+					<input type="checkbox" id="box11" name="box-11" value="Any">
+					<label for="box11">Any</label>
+
+				</form>
+			</div>
+
+			<div class="col-md-10 col-lg-4">
+				<form>
+					<input type="button" id="search1" name="search-1" value="search">
+					<label for="search1"></label>
+				</form>
+			</div>
 		</div>
 
 		<div id="map"></div>
