@@ -1,0 +1,36 @@
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+  <title>Where's the beef?</title>
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+<body>
+  <header>
+    <h1>Where's the beef?</h1>
+    {% if user.is_authenticated %}
+      You are signed in as <strong>{{ user.username }}</strong> /
+      <a href="{% url 'home' %}">home</a> /
+      <a href="{% url 'settings' %}">settings</a> /
+      <a href="{% url 'password' %}">change password</a> /
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a> /
+      <a href="{% url 'signup' %}">signup</a>
+    {% endif %}
+    <hr>
+  </header>
+  <main>
+    {% for message in messages %}
+      <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+        {{ message }}
+      </p>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+  </main>
+  <footer>
+    <hr>
+    
+  </footer>
+</body>
+</html>
