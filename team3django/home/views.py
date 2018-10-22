@@ -6,4 +6,4 @@ from django.http import HttpResponse
 def index(request):
     # return HttpResponse('Hello from Home!')
     #Changed from index to theme
-    return render(request, 'home/theme.html')
+    return render(request, 'home/theme2.html')
