@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,10 +74,8 @@
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
           infowindow.open(map, this);
-        });
-      }
-=======
-		
+		  });
+
 		var input = document.getElementById('pac-input');
 		var searchBox = new google.maps.places.searchBox(input);
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -120,66 +118,73 @@
 				infowindow.setContent(place.name);
 				infowindow.open(map, this);
 			});
-		}
+		  }
 
-		map.addListener('bounds_changed', function () {
-			searchBox.setBounds(map.getBounds());
-		})
+		  //---------------------------------------------------------------
+		  // Code does not work. See if you guys can figure out the problem please!
+		  //---------------------------------------------------------------
 
-		var markers = [];
+		  map.addListener('bounds_changed', function () {
+			  searchBox.setBounds(map.getBounds());
+		  })
 
-		//Listen for the event and predict users inputs
-		searchBox.addListener('places_changed', function () {
-			var places = searchBox.getPlaces();
-			var bounds = new goodle.maps.LatLngBounds();
+		  var markers = [];
 
-			if (places.length = 0)
-				return;
+		  //Listen for the event and predict users inputs
+		  searchBox.addListener('places_changed', function () {
+			  var places = searchBox.getPlaces();
+			  var bounds = new goodle.maps.LatLngBounds();
 
-			//Clear old markers
-			markers.forEach(function (marker) {
-				marker.setMap(null);
-			});
+			  if (places.length = 0)
+				  return;
 
-			markers = [];
+			  //Clear old markers
+			  markers.forEach(function (marker) {
+				  marker.setMap(null);
+			  });
 
-			//for each place, get the icon, name and location
-			var bounds = new google.maps.LatLngBounds();
-			places.forEach(function (place) {
-				if (!place.geometry) {
-					console.log("Returned place contains no geometry");
-					return;
-				}
+			  markers = [];
 
-				var icon = {
-					url: place.icon,
-					size: new google.maps.Size(71, 71),
-					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(17, 34),
-					scaledSize: new google.maps.Size(25, 25)
-				};
+			  //for each place, get the icon, name and location
+			  var bounds = new google.maps.LatLngBounds();
+			  places.forEach(function (place) {
+				  if (!place.geometry) {
+					  console.log("Returned place contains no geometry");
+					  return;
+				  }
 
-				//Create markers for each place
-				markers.push(new google.maps.Marker({
-					map: map,
-					icon: icon,
-					title: place.name,
-					position: place.geometry.location
+				  var icon = {
+					  url: place.icon,
+					  size: new google.maps.Size(71, 71),
+					  origin: new google.maps.Point(0, 0),
+					  anchor: new google.maps.Point(17, 34),
+					  scaledSize: new google.maps.Size(25, 25)
+				  };
 
-				}));
+				  //Create markers for each place
+				  markers.push(new google.maps.Marker({
+					  map: map,
+					  icon: icon,
+					  title: place.name,
+					  position: place.geometry.location
 
-				if (place.geometry.viewport) {
-					bounds.union(place.geometry.viewport);
-				} else {
-					bounds.extend(place.geometry.location);
-				}
+				  }));
 
-			});
+				  if (place.geometry.viewport) {
+					  bounds.union(place.geometry.viewport);
+				  } else {
+					  bounds.extend(place.geometry.location);
+				  }
 
-			map.fitBounds(bounds);
-		});
+			  });
+
+			  map.fitBounds(bounds);
 		
->>>>>>> Stashed changes
+
+			//---------------------------------------------------------------
+		});
+
+
 	</script>
 
 </head>
