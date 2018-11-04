@@ -3,37 +3,33 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="author" content="">
-	<meta name="keyword" content="">
-	<meta name="description" content="">
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<meta name="author" content="Team3: Adam, Chris, Cary, Kevin, Tanner, Ricardo">
+	<meta name="keyword" content="Food, Restaurants, Reviews">
+	<meta name="description" content="The best place for finding food near you.">
 	<title>Beef?</title>
 
-	<!--Jquery-->
-	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-
-	<link rel="stylesheet" href="{% static 'ionicons/css/ionicons.min.css' %}">
+	<!--Links-->
 	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-
-	<!-- Not sure if we will use it, leave it for now -->
-	<link rel="stylesheet" href="{% static 'sweetalert/dist/sweetalert.css' %}">
-
-	<link rel="stylesheet" href="{% static 'css/stisla.css' %}">
-
-	<!--bootstrap - select-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
-
-
-	<!--Popper.js-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-
-	 <!--Fonts-->
+	<link rel="stylesheet" href="{% static 'ionicons/css/ionicons.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/stisla.css' %}">
+	<!--<link rel="stylesheet" href="{% static 'sweetalert/dist/sweetalert.css' %}"> Not sure if we will use it, leave it for now-->
+	
+	<!--Fonts-->
 	<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet"> 
+	
+	<!--Scripts-->
+	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+	<script src="{% static 'js/jquery.easeScroll.js' %}"></script>
+	<!--<script src="{% static 'sweetalert/dist/sweetalert.min.js' %}"></script> Not sure if we will use it, leave it for now-->
+	<script src="{% static 'js/stisla.js' %}"></script>
 
-
-
+	<!--MAP-->
 	<script>
 <<<<<<< Updated upstream
 		var map;
@@ -192,7 +188,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg main-navbar">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="/home">
 				<img src="{% static 'img/Icons/logo.png' %}">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -221,8 +217,9 @@
 	<section class="hero bg-overlay" id="hero" data-bg="{% static 'img/3.jpg' %}">
 		<div class="text py-5">
 			<div class="container" style="margin-bottom: 10em">
-			<h1><span class="bold">Where's the Beef?</h1>
+				<h1><span class="bold">Where's the Beef?</span></h1>
 			<h2>Find your favorite restaurant based on your budget!</h2>
+			</div>
 		</div>
 			<div class="container">
 				<div class="row">
@@ -490,10 +487,6 @@
 		</div>
 	</footer>
 
-	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/jquery.easeScroll.js' %}"></script>
-	<script src="{% static 'sweetalert/dist/sweetalert.min.js' %}"></script>
-	<script src="{% static 'js/stisla.js' %}"></script>
 </body>
 
 </html>
