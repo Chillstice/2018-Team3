@@ -31,36 +31,25 @@
 	<!--MAP-->
 
 	<script>
-
-
-<<<<<<< HEAD
-	 <!--Fonts-->
-	<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
-=======
 		function initAutocomplete() {
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: { lat: -33.8688, lng: 151.2195 },
 				zoom: 13,
 				mapTypeId: 'roadmap'
 			});
->>>>>>> 014018dab12e8a8e470920d08894f8a32fc4d7e1
-
 			// Create the search box and link it to the UI element.
 			var input = document.getElementById('pac-input');
 			var searchBox = new google.maps.places.SearchBox(input);
 			var btn = document.getElementById('btn');
-
 			// Bias the SearchBox results towards current map's viewport.
 			map.addListener('bounds_changed', function () {
 				searchBox.setBounds(map.getBounds());
 			});
-
 			var markers = [];
 			// Listen for the event fired when the user selects a prediction and retrieve
 			// more details for that place.
 			searchBox.addListener('places_changed', function () {
 				var places = searchBox.getPlaces();
-
 				if (places.length == 0) {
 					return;
 				}
@@ -69,7 +58,6 @@
 						marker.setMap(null);
 					});
 					markers = [];
-
 					// For each place, get the icon, name and location.
 					var bounds = new google.maps.LatLngBounds();
 					places.forEach(function (place) {
@@ -84,7 +72,6 @@
 							anchor: new google.maps.Point(17, 34),
 							scaledSize: new google.maps.Size(25, 25)
 						};
-
 						// Create a marker for each place.
 						markers.push(new google.maps.Marker({
 							map: map,
@@ -92,7 +79,6 @@
 							title: place.name,
 							position: place.geometry.location
 						}));
-
 						if (place.geometry.viewport) {
 							// Only geocodes have viewport.
 							bounds.union(place.geometry.viewport);
@@ -108,15 +94,12 @@
 		var map;
 		var infowindow;
 		var button;
-
 		function initMap() {
 			var denver = { lat: 39.7430596, lng: -105.006621 };
-
 			map = new google.maps.Map(document.getElementById('map'), {
 				center: denver,
 				zoom: 15,
 			});
-
 			infowindow = new google.maps.InfoWindow();
 			var service = new google.maps.places.PlacesService(map);
 			service.nearbySearch({
@@ -125,7 +108,6 @@
 				type: ['restaurant']
 			}, callback);
 		}
-
 		function callback(results, status) {
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				for (var i = 0; i < results.length; i++) {
@@ -133,20 +115,16 @@
 				}
 			}
 		}
-
 		function createMarker(place) {
 			var marker = new google.maps.Marker({
 				map: map,
 				position: place.geometry.location
 			});
-
 			google.maps.event.addListener(marker, 'click', function () {
 				infowindow.setContent(place.name);
 				infowindow.open(map, this);
 			});
 		  }
-
-
 	</script>-->
 
 </head>
@@ -229,11 +207,8 @@
                 var input = document.getElementById('locationTextField');
                 var autocomplete = new google.maps.places.Autocomplete(input);
             }
-
             google.maps.event.addDomListener(window, 'load', init);
 					</script>
-
-
 			<script>
 					$(document).ready(function(e) {
 						$('.selectpicker').selectpicker();
