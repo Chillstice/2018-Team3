@@ -8,7 +8,7 @@
 	<meta name="author" content="Team3: Adam, Chris, Cary, Kevin, Tanner, Ricardo">
 	<meta name="keyword" content="Food, Restaurants, Reviews">
 	<meta name="description" content="The best place for finding food near you.">
-	<title>Beef?</title>
+	<title>Where's the Beef? Find Your Favorite Restaurant Based On Your Budget</title>
 
 	<!--Links-->
 	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
@@ -153,6 +153,9 @@
 					<li class="nav-item">
 						<a class="nav-link smooth-link" href="#contact">Contact</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link smooth-link" href="#about_us">About Us</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -167,32 +170,25 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
-						<select class="selectpicker" multiple title="Budget" data-actions-box="true">
-							<option data-thumbnail="img/cheapy.png">1-20$</option>
-							<option data-thumbnail="img/middle_ground.png">21-50$</option>
-							<option data-thumbnail="img/expensive.png">50+$</option>
+						<select name="budget" id="budget" class="icon-menu">
+							<option style="padding-left:0px;" value="">Budget</option>
+							<option style="background-image:url(cheapy.png);" value="cheap">$1-$20</option>
+							<option style="background-image:url(middle_ground.png);" value="middle">$21-$50</option>
+							<option style="background-image:url(expensive.png);" value="expensive">$50+</option>
 						</select>
 					</div>
 					<div class="col-md-3">
-						<select class="selectpicker" multiple title="Type" data-actions-box="true">
-							<option>Sit Down</option>
+						<select name="dining_method" id="dining_method" class="icon-menu">
+							<option style="padding-left:0px;" value="">Method of Dining</option>
+							<option value="sitdown">Sit Down</option>
 							<option>Take Out</option>
 						</select>
 					</div>
 					<div class="col-md-3">
-						<select class="selectpicker" multiple title="Cuisine" data-actions-box="true">
-							<option>Mexican</option>
-							<option>Steak House</option>
-							<option>Asian</option>
-							<option>Breakfast</option>
-							<option>American</option>
-							<option>Indian</option>
-						</select>
-
+						<input type="text" id="cuisine-input" placeholder="What would you like to eat?" style="width: 100%; height: 100%" />
 					</div>
 					<div class="col-md-3">
 						<input type="text" id="pac-input" placeholder="Enter a location" style="width: 100%; height: 100%" />
-
 					</div>
 				</div>
 				<div class="cta">
