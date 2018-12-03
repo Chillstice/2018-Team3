@@ -31,12 +31,16 @@
 	<!--MAP-->
 
 	<script>
+		// var map;
+		//var infoWindow;
+		var places;
+
 		function initAutocomplete() {
 			map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 39.7430596, lng: -105.006621},
           zoom: 15
         });
-        infoWindow = new google.maps.InfoWindow;
+		var infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -65,22 +69,32 @@
 			map.addListener('bounds_changed', function () {
 				searchBox.setBounds(map.getBounds());
 			});
+
 			var markers = [];
 			// Listen for the event fired when the user selects a prediction and retrieve
 			// more details for that place.
 			searchBox.addListener('places_changed', function () {
-				var places = searchBox.getPlaces();
+				places = searchBox.getPlaces();
 				if (places.length == 0) {
 					return;
 				}
+				zoom: 15;
 					// Clear out the old markers.
 					markers.forEach(function (marker) {
 						marker.setMap(null);
 					});
 					markers = [];
-					// For each place, get the icon, name and location.
+					// For each place, get the icon, name and location and place id.
 					var bounds = new google.maps.LatLngBounds();
 					places.forEach(function (place) {
+						
+						
+						if(place.opening_hours){
+							var isOpen = place.opening_hours.open_now;
+						}
+						
+
+
 						if (!place.geometry) {
 							console.log("Returned place contains no geometry");
 							return;
@@ -97,55 +111,101 @@
 							map: map,
 							icon: icon,
 							title: place.name,
-							position: place.geometry.location
+							position: place.geometry.location,
+							placeId: place.place_id
 						}));
+
 						if (place.geometry.viewport) {
 							// Only geocodes have viewport.
 							bounds.union(place.geometry.viewport);
 						} else {
 							bounds.extend(place.geometry.location);
 						}
+					
+					
 					});
+
+					//attach a listener to each returned marker
+					markers.forEach(function(marker){
+					google.maps.event.addListener(marker,'click',function() {
+							
+
+							var place = places.filter(pl => {
+								return pl.place_id === marker.placeId;
+							})
+
+							var markerContent = '<div>' + place[0].name + '</div>' + '<div>' + place[0].formatted_address + 'Scroll Down For More Information' + '</div>';
+							
+							if(!infoWindow)
+							{
+								infoWindow = new google.maps.InfoWindow;	
+							}
+
+							//TODO:
+
+							//infoWindow.setPosition(marker.position);
+							//infoWindow.setContent(markerContent);
+							//infoWindow.open(map, markerContent);
+							
+							//set place name on html
+							var placeNameDiv = $('#place_name');
+							placeNameDiv.text(place[0].name);
+
+							//Address
+							var placeAddressDiv = $('#place_formatted_address');
+							placeAddressDiv.text(place[0].formatted_address);
+
+							// Price Level
+							var placePriceDiv = $('#place_price_level');
+				
+							switch (place[0].price_level) {
+								case 1:
+									placePriceDiv.text('$');
+									break;
+								case 2:
+									placePriceDiv.text('$$');
+									break;
+								case 3:
+									placePriceDiv.text('$$$');	
+									break;
+								case 4:
+									placePriceDiv.text('$$$$');
+									break;
+								default: 
+									placePriceDiv.text(place[0].price_level);
+							}		
+							
+							// Opening hours
+							var placeHoursDiv = $('#place_opening_hours_open_now');
+							if (place[0].opening_hours.open_now == false) {
+								placeHoursDiv.text('Closed');
+							} 
+							else {
+								placeHoursDiv.text('Open')
+							}
+
+							// Rating
+							var placeRatingDiv = $('#place_rating');
+							placeRatingDiv.text(place[0].rating);
+
+							// Photos TODO
+							var placePhotosDiv = $('#place_photos');
+							placePhotosDiv.text(place[0].photos[0].html_attributions[0]);
+
+							
+
+
+							
+
+						});
+								
+					})
+
 					map.fitBounds(bounds);
 			});
 		}
 	</script>
-	<!-- <script>
-		var map;
-		var infowindow;
-		var button;
-		function initMap() {
-			var denver = { lat: 39.7430596, lng: -105.006621 };
-			map = new google.maps.Map(document.getElementById('map'), {
-				center: denver,
-				zoom: 15,
-			});
-			infowindow = new google.maps.InfoWindow();
-			var service = new google.maps.places.PlacesService(map);
-			service.nearbySearch({
-				location: denver,
-				radius: 1000,
-				type: ['restaurant']
-			}, callback);
-		}
-		function callback(results, status) {
-			if (status === google.maps.places.PlacesServiceStatus.OK) {
-				for (var i = 0; i < results.length; i++) {
-					createMarker(results[i]);
-				}
-			}
-		}
-		function createMarker(place) {
-			var marker = new google.maps.Marker({
-				map: map,
-				position: place.geometry.location
-			});
-			google.maps.event.addListener(marker, 'click', function () {
-				infowindow.setContent(place.name);
-				infowindow.open(map, this);
-			});
-		  }
-	</script> -->
+
 
 </head>
 
@@ -189,10 +249,10 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-3">
+					<!-- <div class="col-md-3">
 						<select name="budget" id="budget" class="icon-menu">
 							<option style="padding-left:0px;" value="">Budget</option>
-							<option style="background-image:url(cheapy.png);" value="cheap">$1-$20</option>
+							<option style="background-image:url(./static/img/Icons/cheapy.png);" value="cheap">$1-$20</option>
 							<option style="background-image:url(middle_ground.png);" value="middle">$21-$50</option>
 							<option style="background-image:url(expensive.png);" value="expensive">$50+</option>
 						</select>
@@ -206,9 +266,9 @@
 					</div>
 					<div class="col-md-3">
 						<input type="text" id="cuisine-input" placeholder="What would you like to eat?" style="width: 100%; height: 100%" />
-					</div>
-					<div class="col-md-3">
-						<input type="text" id="pac-input" placeholder="Enter a location" style="width: 100%; height: 100%" />
+					</div> -->
+					<div class="col-md-12">
+						<input type="text" id="pac-input" placeholder="What would you like to eat?" style="width: 100%; height: 100%" />
 					</div>
 				</div>
 				<div class="cta">
@@ -216,21 +276,6 @@
 				</div>
 			</div>
 		</div>
-
-			<!--This script isn't referencing an applicable id named 'locationTextField'-->
-				<!--<script>
-						 function init() {
-                var input = document.getElementById('locationTextField');
-                var autocomplete = new google.maps.places.Autocomplete(input);
-            }
-            google.maps.event.addDomListener(window, 'load', init);
-					</script>
-			<script>
-					$(document).ready(function(e) {
-						$('.selectpicker').selectpicker();
-						dropupAuto: false
-					});
-			</script>-->
 
 	</section>
 
@@ -242,45 +287,44 @@
 				async defer></script>
 	</section>
 
-	{% comment %} <section class="padding bg-grey" id="blog">
+	<section class="padding bg-grey" id="blog">
 		<div class="container">
-			<h2 class="section-title">We Blog Sometimes</h2>
-			<p class="section-lead text-muted">We wrote some articles about whatever was on our heads and most people liked it.</p>
 			<div class="section-body">
 				<div class="row col-spacing">
-					<div class="col-12 col-md-6 col-lg-4">
+
+					<div class="col-12 col-md-12 col-lg-12">
 						<article class="card">
-							<img class="card-img-top" src="img/news/img01.jpg" alt="Article Image">
 							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Duis aute irure dolor in reprehenderit in
-										voluptate</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
+								<h4  id="place_name"class="card-title"></h4>
+								<p id="place_formatted_address" class="card-text"></p>
+								<p id="place_price_level" class="card-text"></p>
+								<p id="place_opening_hours_open_now" class="card-text"></p>
+								<p id="place_rating" class="card-text"></p>
+								<div id="place_photos" class="card-img-top"></div>
+
 								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
 								</div>
+							</div>
+						</article>
+					</div>
+
+
+
+					<!-- <div class="col-12 col-md-6 col-lg-4">
+						<article class="card">
+							<div class="card-body">
+									<h4 id="places_name"class="card-title"></h4>
+									<p id="places_formatted_address" class="card-text"></p>
+									<p id="places_price_level" class="card-text"></p>
+									<p id="places_opening_hours_open_now" class="card-text"></p>
+									<p id="places_rating" class="card-text"></p>
+									<div id="places_photos" class="card-img-top"></div>
 							</div>
 						</article>
 					</div>
 					<div class="col-12 col-md-6 col-lg-4">
 						<article class="card">
-							<img class="card-img-top" src="img/news/img04.jpg" alt="Article Image">
-							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Velit esse cillum dolore eu blos siur
-										dropsida wedor</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
-								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
-								</div>
-							</div>
-						</article>
-					</div>
-					<div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<img class="card-img-top" src="img/news/img02.jpg" alt="Article Image">
+							<img class="card-img-top" src="" alt="Article Image">
 							<div class="card-body">
 								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
 								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Excepteur sint as occaecat dros cupidatat non
@@ -295,7 +339,7 @@
 					</div>
 					<div class="col-12 col-md-6 col-lg-4">
 						<article class="card">
-							<img class="card-img-top" src="img/news/img05.jpg" alt="Article Image">
+							<img class="card-img-top" src="" alt="Article Image">
 							<div class="card-body">
 								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
 								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Sunt in ado culpa qui officia deserunt mollit
@@ -310,7 +354,7 @@
 					</div>
 					<div class="col-12 col-md-6 col-lg-4">
 						<article class="card">
-							<img class="card-img-top" src="img/news/img03.jpg" alt="Article Image">
+							<img class="card-img-top" src="" alt="Article Image">
 							<div class="card-body">
 								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
 								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Incididunt ut labore et labore dolore magna
@@ -325,7 +369,7 @@
 					</div>
 					<div class="col-12 col-md-6 col-lg-4">
 						<article class="card">
-							<img class="card-img-top" src="img/news/img06.jpg" alt="Article Image">
+							<img class="card-img-top" src="" alt="Article Image">
 							<div class="card-body">
 								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
 								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Ut enim ad minim veniam quis nostrud enim ad
@@ -339,9 +383,9 @@
 						</article>
 					</div>
 				</div>
-			</div>
+			</div> --> 
 
-			<div class="row align-items-center mt-5">
+			<!-- <div class="row align-items-center mt-5">
 				<div class="col-12 col-md-6">
 					<h2>Don't miss our article</h2>
 					<p class="text-muted">Just enter your email then we will send an email about the latest articles</p>
@@ -354,9 +398,9 @@
 				</div>
 			</div>
 		</div>
-	</section> {% endcomment %}
+	</section>  -->
 
-	{% comment %} <section class="bg-overlay padding" id="project" data-bg="img/projects.jpeg">
+	<!-- <section class="bg-overlay padding" id="project" data-bg="img/projects.jpeg">
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-12 col-md-6">
@@ -388,7 +432,7 @@
 				</div>
 			</div>
 		</div>
-	</section> {% endcomment %}
+	</section> -->
 
 	<section class="padding bg-grey" id="contact">
 		<div class="container">
@@ -433,8 +477,9 @@
 				</div>
 			</div>
 		</div>
-	</section>
-<!- About Us ->
+	</section> 
+
+
 	<section class = "padding bg-grey" id="about_us">
 		<div class = "container">
 			<h2 class="section-title text-center">About Us</h2>
