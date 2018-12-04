@@ -165,8 +165,9 @@ html, body {
 }
 
 .navbar.main-navbar .navbar-brand img {
-	width: 100%;
+	width: 90%;
 }
+
 
 .navbar.main-navbar .nav-link {
 	color: #fff;
@@ -466,10 +467,7 @@ article.card .card-img-top {
 	height: 100%;
 }
 
-article.card .card-title {
-	font-size: 20px;
-	line-height: 28px;
-}
+
 
 article.card .card-title a {
 	color: #000;
@@ -480,10 +478,7 @@ article.card .card-title a:hover {
 	opacity: .8;
 }
 
-article.card .card-text {
-	color: #666;
-	line-height: 26px;
-}
+
 
 article.card .card-subtitle {
 	font-size: 14px;
@@ -859,4 +854,104 @@ input[type=checkbox]:checked:disabled + label:before {
 	.article-read .article-read-inner {
 		width: 80%;
 	}
+}
+
+/* InfoWindows */
+#infoName {
+	font-size: 1.2em;
+	font-weight: 600;
+}
+
+#infoAddress {
+	font-weight: 400;
+
+}
+
+#infoScrollDown {
+	font-weight: bolder;
+	color: white;
+}
+
+/* Search Bar */
+input[id=pac-input] {
+	color: white;
+	width: 100%;
+	height: 100%;
+	font-size: 1.5em;
+	border-radius: 50px;
+	padding: 10px;
+	background-color: transparent; 
+	border: 3px solid white;
+
+}
+
+::placeholder {
+	color: white;
+	text-align: center;
+}
+
+/* Information Card */
+#place_name {
+	font-size: 3em;
+	font-weight: bold;
+}
+
+#place_formatted_address {
+	font-size: 1.2em;
+	text-align: center;
+}
+
+#place_photos {
+	height: 50%;
+}
+
+#place_price_level {
+	text-align: center;
+	font-size: 1.7em;
+}
+
+#place_opening_hours_open_now {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 1.7em;
+
+}
+
+#place_rating {
+	text-align: center;
+	font-size: 1.7em;
+
+}
+
+.img-thumbnail {
+	width: 100%;
+	height: 30vw;
+	object-fit: cover;
+	float: left;
+	padding: 0em;
+	border: 0px solid white;
+}
+
+
+
+article.card .card-title {
+	font-size: 20px;
+	line-height: 45px;
+	text-align: center;
+}
+
+article.card .card-text {
+	color: #666;
+	line-height: 26px;
+}
+
+#more_info {
+	margin: 2em;
+}
+
+#about_names li{
+	list-style-type: none;
+	text-align: center;
+	margin: 1em;
+	text-decoration: underline;
 }

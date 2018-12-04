@@ -28,19 +28,21 @@
 	<!--<script src="{% static 'sweetalert/dist/sweetalert.min.js' %}"></script> Not sure if we will use it, leave it for now-->
 	<script src="{% static 'js/stisla.js' %}"></script>
 
+	<link rel="shortcut icon" href="{% static 'img/favicon1.ico' %}">
+
 	<!--MAP-->
 
 	<script>
-		// var map;
-		//var infoWindow;
+
 		var places;
 
 		function initAutocomplete() {
 			map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 39.7430596, lng: -105.006621},
           zoom: 15
-        });
-		var infoWindow = new google.maps.InfoWindow;
+		});
+		
+		var infoWindow = new google.maps.InfoWindow();
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -87,12 +89,12 @@
 					// For each place, get the icon, name and location and place id.
 					var bounds = new google.maps.LatLngBounds();
 					places.forEach(function (place) {
-
-
+						
+						
 						if(place.opening_hours){
 							var isOpen = place.opening_hours.open_now;
 						}
-
+						
 
 
 						if (!place.geometry) {
@@ -101,7 +103,7 @@
 						}
 						var icon = {
 							url: place.icon,
-							size: new google.maps.Size(71, 71),
+							size: new google.maps.Size(25, 25),
 							origin: new google.maps.Point(0, 0),
 							anchor: new google.maps.Point(17, 34),
 							scaledSize: new google.maps.Size(25, 25)
@@ -121,33 +123,30 @@
 						} else {
 							bounds.extend(place.geometry.location);
 						}
-
-
+					
+					
 					});
 
+					
+					//var infoWindow = new google.maps.InfoWindow();
 					//attach a listener to each returned marker
 					markers.forEach(function(marker){
-					google.maps.event.addListener(marker,'click',function() {
+						google.maps.event.addListener(marker,'click',function() {
 
-
+							var container = document.getElementById('description_container');
+							container.style.display = "block";
+							
 							var place = places.filter(pl => {
 								return pl.place_id === marker.placeId;
 							})
 
-							var markerContent = '<div>' + place[0].name + '</div>' + '<div>' + place[0].formatted_address + 'Scroll Down For More Information' + '</div>';
-
-							if(!infoWindow)
-							{
-								infoWindow = new google.maps.InfoWindow;
-							}
-
-							//TODO:
-
-							//infoWindow.setPosition(marker.position);
-							//infoWindow.setContent(markerContent);
-							//infoWindow.open(map, markerContent);
-
-							//set place name on html
+							var markerContent = '<div id="infoName">' + place[0].name + '</div>' + '<div id="infoAddress">' + place[0].formatted_address + '</div>' + 
+												'<div class="cta"> <a href="#Information" id="infoScrollDown" class="btn-primary smooth-link">' + 'Scroll Down For More Information</a>' + '</div>';
+							
+							infoWindow.setContent(markerContent);
+							infoWindow.open(map, marker);
+							
+							// set place name on html
 							var placeNameDiv = $('#place_name');
 							placeNameDiv.text(place[0].name);
 
@@ -157,7 +156,7 @@
 
 							// Price Level
 							var placePriceDiv = $('#place_price_level');
-
+				
 							switch (place[0].price_level) {
 								case 1:
 									placePriceDiv.text('$');
@@ -166,44 +165,52 @@
 									placePriceDiv.text('$$');
 									break;
 								case 3:
-									placePriceDiv.text('$$$');
+									placePriceDiv.text('$$$');	
 									break;
 								case 4:
 									placePriceDiv.text('$$$$');
 									break;
-								default:
+								default: 
 									placePriceDiv.text(place[0].price_level);
-							}
-
+							}		
+							
 							// Opening hours
 							var placeHoursDiv = $('#place_opening_hours_open_now');
-							if (place[0].opening_hours.open_now == false) {
-								placeHoursDiv.text('Closed');
-							}
-							else {
-								placeHoursDiv.text('Open')
+							
+							if(place[0].opening_hours)
+							{
+								if (!place[0].opening_hours.open_now) {
+								placeHoursDiv.text('Closed').css("color", "red");
+								} 
+								else {
+									placeHoursDiv.text('Open').css("color", "green");
+								}
 							}
 
 							// Rating
 							var placeRatingDiv = $('#place_rating');
 							placeRatingDiv.text(place[0].rating);
 
-							// Photos TODO
-							var placePhotosDiv = $('#place_photos');
-							placePhotosDiv.text(place[0].photos[0].html_attributions[0]);
+							// Photos 
+							if(place[0].photos.length > 0) {
+								var placePhotosDiv = $('#place_photos');
+								placePhotosDiv.css("visibility", "visible");
 
-
-
-
-
+								var img = $('#place_image');
+								img.attr("src", place[0].photos[0].getUrl());
+								img.attr("width", place[0].photos[0].html_attributions[0].width);
+								img.attr("height", place[0].photos[0].html_attributions[0].height);
+							}
 
 						});
-
+								
 					})
 
 					map.fitBounds(bounds);
 			});
 		}
+
+
 	</script>
 
 
@@ -212,7 +219,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg main-navbar">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/home">
+			<a class="navbar-brand" href="/home"> 
 				<img src="{% static 'img/Icons/logo.png' %}">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -230,15 +237,15 @@
 					<li class="nav-item">
 						<a class="nav-link smooth-link" href="#features">Map</a>
 					</li>
-					<li class="nav-item">
+					{% comment %} <li class="nav-item">
 						<a class="nav-link smooth-link" href="#contact">Contact</a>
-					</li>
+					</li> {% endcomment %}
 					<li class="nav-item">
 						<a class="nav-link smooth-link" href="#about_us">About Us</a>
 					</li>
 					<li class="nav-item">
 						<!--<a class="nav-link smooth-link" href='/signup'>Sign Up</a>-->
-						<button type="button" onclick="location.href='{% url 'signup' %}'">Sign Up</button>
+						<button type="button" class="btn btn-secondary" onclick="location.href='{% url 'signup' %}'">Sign Up</button>
 					</li>
 				</ul>
 			</div>
@@ -249,30 +256,12 @@
 		<div class="text py-5">
 			<div class="container" style="margin-bottom: 10em">
 				<h1><span class="bold">Where's the Beef?</span></h1>
-				<h2>Find your favorite restaurant based on your budget!</h2>
+				<h2>Find your favorite restaurant!</h2>
 			</div>
 			<div class="container">
 				<div class="row">
-					<!-- <div class="col-md-3">
-						<select name="budget" id="budget" class="icon-menu">
-							<option style="padding-left:0px;" value="">Budget</option>
-							<option style="background-image:url(./static/img/Icons/cheapy.png);" value="cheap">$1-$20</option>
-							<option style="background-image:url(middle_ground.png);" value="middle">$21-$50</option>
-							<option style="background-image:url(expensive.png);" value="expensive">$50+</option>
-						</select>
-					</div>
-					<div class="col-md-3">
-						<select name="dining_method" id="dining_method" class="icon-menu">
-							<option style="padding-left:0px;" value="">Method of Dining</option>
-							<option value="sitdown">Sit Down</option>
-							<option>Take Out</option>
-						</select>
-					</div>
-					<div class="col-md-3">
-						<input type="text" id="cuisine-input" placeholder="What would you like to eat?" style="width: 100%; height: 100%" />
-					</div> -->
 					<div class="col-md-12">
-						<input type="text" id="pac-input" placeholder="What would you like to eat?" style="width: 100%; height: 100%" />
+						<input type="text" id="pac-input" placeholder="What would you like to eat?"/>
 					</div>
 				</div>
 				<div class="cta">
@@ -284,161 +273,46 @@
 	</section>
 
 	<section id="features">
-
+		
 		<div id="map"></div>
 
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyhril-xfIo67Xk81Y33Y5IHYeLZ2FzIo&libraries=places&callback=initAutocomplete"
 				async defer></script>
 	</section>
 
-	<section class="padding bg-grey" id="blog">
+	<section id="Information">
+	<section class="padding bg-grey">
 		<div class="container">
 			<div class="section-body">
 				<div class="row col-spacing">
-
 					<div class="col-12 col-md-12 col-lg-12">
 						<article class="card">
-							<div class="card-body">
-								<h4  id="place_name"class="card-title"></h4>
-								<p id="place_formatted_address" class="card-text"></p>
-								<p id="place_price_level" class="card-text"></p>
-								<p id="place_opening_hours_open_now" class="card-text"></p>
-								<p id="place_rating" class="card-text"></p>
-								<div id="place_photos" class="card-img-top"></div>
-
-								<div class="text-right">
+							<div class="card-body" id="description_container" style="display:none;">
+							<div id="place_photos" style="visibility:hidden;">
+									<img id="place_image" class="img-thumbnail" />
 								</div>
-							</div>
-						</article>
-					</div>
 
-
-
-					<!-- <div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<div class="card-body">
-									<h4 id="places_name"class="card-title"></h4>
-									<p id="places_formatted_address" class="card-text"></p>
-									<p id="places_price_level" class="card-text"></p>
-									<p id="places_opening_hours_open_now" class="card-text"></p>
-									<p id="places_rating" class="card-text"></p>
-									<div id="places_photos" class="card-img-top"></div>
-							</div>
-						</article>
-					</div>
-					<div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<img class="card-img-top" src="" alt="Article Image">
-							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Excepteur sint as occaecat dros cupidatat non
-										proident los</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
-								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
+									<h4  id="place_name"class="card-title"></h4>
+									<p id="place_formatted_address" class="card-text"></p>
+										<div class="row" id="more_info">
+											<div class="col-md-4">
+												<p id="place_price_level" class="card-text"></p>
+											</div>
+											<div class="col-md-4">
+												<p id="place_opening_hours_open_now" class="card-text"></p>
+											</div>
+											<div class="col-md-4">
+												<p id="place_rating" class="card-text"></p>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
 						</article>
 					</div>
-					<div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<img class="card-img-top" src="" alt="Article Image">
-							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Sunt in ado culpa qui officia deserunt mollit
-										anim id</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
-								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
-								</div>
-							</div>
-						</article>
-					</div>
-					<div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<img class="card-img-top" src="" alt="Article Image">
-							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Incididunt ut labore et labore dolore magna
-										aliqua lorem</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
-								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
-								</div>
-							</div>
-						</article>
-					</div>
-					<div class="col-12 col-md-6 col-lg-4">
-						<article class="card">
-							<img class="card-img-top" src="" alt="Article Image">
-							<div class="card-body">
-								<div class="card-subtitle mb-2 text-muted">by <a href="#">John Doe</a> on August 10, 2017</div>
-								<h4 class="card-title"><a href="#" data-toggle="read" data-id="1">Ut enim ad minim veniam quis nostrud enim ad
-										kruv</a></h4>
-								<p class="card-text">Mauris eu eros in metus elementum porta eget sed ligula. Praesent consequat, ipsum
-									molestie pellentesque venenatis.</p>
-								<div class="text-right">
-									<a href="#" class="card-more" data-toggle="read" data-id="1">Read More <i class="ion-ios-arrow-right"></i></a>
-								</div>
-							</div>
-						</article>
-					</div>
-				</div>
-			</div> -->
+				</section>
 
-			<!-- <div class="row align-items-center mt-5">
-				<div class="col-12 col-md-6">
-					<h2>Don't miss our article</h2>
-					<p class="text-muted">Just enter your email then we will send an email about the latest articles</p>
-				</div>
-				<div class="col-12 col-md-6">
-					<form class="subscribe" action="#">
-						<input type="email" name="email" class="form-control" placeholder="Your email">
-						<button class="btn btn-primary">Subscribe</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>  -->
 
-	<!-- <section class="bg-overlay padding" id="project" data-bg="img/projects.jpeg">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-12 col-md-6">
-					<figure class="projects-picture">
-						<img src="img/youzhang.png" alt="Youzhang">
-					</figure>
-				</div>
-				<div class="col-12 col-md-6">
-					<div class="projects-details">
-						<div class="projects-badge">
-							Featured
-						</div>
-						<h2 class="projects-title">Youzhang - Ionic 3 Catalogue Template</h2>
-						<p class="projects-description">
-							Youzhang is an iconic template catalog 3. This ionic template uses version 3 and uses the latest feature of
-							ionic v3 that is Lazy Loading. With Ionic version 3 and Lazy Loading you don’t have to define all the components
-							in the app.module.ts file and your hybrid app will get more native and it will make the app performance better.
-						</p>
-						<div class="projects-cta">
-							<a href="https://codecanyon.net/item/youzhang-ionic-3-catalogue-template/20466954?ref=frameborder" class="btn btn-primary"
-							 target="_blank">
-								Buy Now
-							</a>
-							<a href="https://codecanyon.net/user/frameborder?ref=frameborder" class="btn btn-link" target="_blank">
-								More Products
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
-
-	<section class="padding bg-grey" id="contact">
+	<!-- <section class="padding bg-grey" id="contact">
 		<div class="container">
 			<h2 class="section-title text-center">Contact Us</h2>
 			<p class="section-lead text-center text-muted">Send us your inquiry, we will help you and reply as soon as possible</p>
@@ -481,7 +355,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section>  -->
 
 
 	<section class = "padding bg-grey" id="about_us">
@@ -491,13 +365,21 @@
 			<p class = "section-lead text-center text-muted">We created this app to help facilitate the lives of the people who are just looking for a cheap, quick bite to grab.</p>
 			<p class = "section-lead text-center text-muted">But mainly this app was thought of and soon brought into motion when one of the devs (who shall not be named) was ravenous beyond diction.</p>
 			<p class = "section-lead text-center text-muted">There are six of us <s>ne'er-do-wells</s> brilliant minds here on Team 3:
-			<ul class = "section-lead text-muted">
-				<li>Adam Habil</li>
-				<li>Cary Rybalchenko</li>
-				<li>Chris Hill</li>
-				<li>Kevin Valenzuela</li>
-				<li>Tanner Rosner</li>
-				<li>Ricardo Avila</li>
+			<ul class = "text-muted" id="about_names">
+				<div class="row">
+				<div class="col-md-4">
+					<li>Adam Habil</li>
+					<li>Cary Rybalchenko</li>
+				</div>
+				<div class="col-md-4">
+					<li>Chris Hill</li>
+					<li>Kevin Valenzuela</li>
+				</div>
+				<div class="col-md-4">
+					<li>Tanner Rosner</li>
+					<li>Ricardo Avila</li>
+				</div>
+			</div>
 			</ul>
 			</p>
 		</div>
