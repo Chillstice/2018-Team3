@@ -26,7 +26,7 @@ def postsign(request):
         user = authe.sign_in_with_email_and_password(email,passw)
     except:
         message = "invalid credentials"
-        return render(request,"signIn.html",{"msg":message})
+        return render(request,"home/signIn.html",{"msg":message})
     print(user['idToken'])
     session_id = user['idToken']
     request.session['uid'] = str(session_id)
