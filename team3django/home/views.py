@@ -16,7 +16,7 @@ authe = firebase.auth()
 database = firebase.database()
 
 def signIn(request):
-    return render(request, "signIn.html")
+    return render(request, "home/signIn.html",{})
 
 def postsign(request):
     email = request.POST.get('email')
@@ -25,18 +25,18 @@ def postsign(request):
         user = authe.sign_in_with_email_and_password(email,passw)
     except:
         message = "invalid cerediantials"
-        return render(request,"signIn.html",{"msg":message})
+        return render(request,"home/signIn.html",{"msg":message})
     print(user['idToken'])
     session_id = user['idToken']
     request.session['uid'] = str(session_id)
-    return render(request, "welcome.html",{"e":email})
+    return render(request, "home/theme2.html",{"e":email})
 
 def signUp(request):
-    return render(request,"signup.html")
+    return render(request,"home/signup.html",{})
 
 def logout(request):
     auth.logout(request)
-    return render(request, 'signIn.html')
+    return render(request, 'home/signIn.html')
 
 def postsignup(request):
     name = request.POST.get('name')
@@ -52,9 +52,9 @@ def postsignup(request):
         database.child("users").child(uid).child("details").set(data)
     except:
         message = "Unable to create account try again"
-        return render(request,"signup.html",{messg:message})
+        return render(request,"home/signup.html",{messg:message})
 
-    return render(request, "signIn.html")
+    return render(request, "home/signIn.html")
 
 
 def index(request):
