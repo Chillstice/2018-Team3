@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import pyrebase
+from django.contrib import auth
 
 # Create your views here.
 config = {
@@ -16,7 +17,7 @@ authe = firebase.auth()
 database = firebase.database()
 
 def signIn(request):
-    return render(request, "home/signIn.html",{})
+    return render(request, "signIn.html")
 
 def postsign(request):
     email = request.POST.get('email')
@@ -24,15 +25,15 @@ def postsign(request):
     try:
         user = authe.sign_in_with_email_and_password(email,passw)
     except:
-        message = "invalid cerediantials"
-        return render(request,"home/signIn.html",{"msg":message})
+        message = "invalid credentials"
+        return render(request,"signIn.html",{"msg":message})
     print(user['idToken'])
     session_id = user['idToken']
     request.session['uid'] = str(session_id)
     return render(request, "home/theme2.html",{"e":email})
 
 def signUp(request):
-    return render(request,"home/signup.html",{})
+    return render(request,"home/signup.html")
 
 def logout(request):
     auth.logout(request)
@@ -52,9 +53,9 @@ def postsignup(request):
         database.child("users").child(uid).child("details").set(data)
     except:
         message = "Unable to create account try again"
-        return render(request,"home/signup.html",{messg:message})
+        return render(request,"home/signup.html",{"messg":message})
 
-    return render(request, "home/signIn.html")
+    return render(request, "signIn.html")
 
 
 def index(request):

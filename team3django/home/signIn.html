@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<form action="/postsign/" method="post">
+<form action=" {% url 'postsign' %}" method="post">
   {% csrf_token %}
   Email :
   <input type="email" name="email">

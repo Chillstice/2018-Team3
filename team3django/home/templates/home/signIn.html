@@ -11,14 +11,14 @@
 
 </head>
 <body>
-<form action="/postsign/" method="post">
+<form action=" {% url 'postsign' %}" method="post">
   {% csrf_token %}
   Email :
   <input type="email" name="email">
   Password:
   <input type="password" name="pass">
   <input type="submit" value="SignIn">
-    <button type="button" onclick="location.href='{% url 'signup' %}'">SignUp</button>
+    <button type="button" onclick="location.href='{% url 'signup' %}'">Sign Up</button>
 </form>
 </body>
 </html>
