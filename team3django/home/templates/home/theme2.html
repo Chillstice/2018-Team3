@@ -87,12 +87,12 @@
 					// For each place, get the icon, name and location and place id.
 					var bounds = new google.maps.LatLngBounds();
 					places.forEach(function (place) {
-						
-						
+
+
 						if(place.opening_hours){
 							var isOpen = place.opening_hours.open_now;
 						}
-						
+
 
 
 						if (!place.geometry) {
@@ -121,24 +121,24 @@
 						} else {
 							bounds.extend(place.geometry.location);
 						}
-					
-					
+
+
 					});
 
 					//attach a listener to each returned marker
 					markers.forEach(function(marker){
 					google.maps.event.addListener(marker,'click',function() {
-							
+
 
 							var place = places.filter(pl => {
 								return pl.place_id === marker.placeId;
 							})
 
 							var markerContent = '<div>' + place[0].name + '</div>' + '<div>' + place[0].formatted_address + 'Scroll Down For More Information' + '</div>';
-							
+
 							if(!infoWindow)
 							{
-								infoWindow = new google.maps.InfoWindow;	
+								infoWindow = new google.maps.InfoWindow;
 							}
 
 							//TODO:
@@ -146,7 +146,7 @@
 							//infoWindow.setPosition(marker.position);
 							//infoWindow.setContent(markerContent);
 							//infoWindow.open(map, markerContent);
-							
+
 							//set place name on html
 							var placeNameDiv = $('#place_name');
 							placeNameDiv.text(place[0].name);
@@ -157,7 +157,7 @@
 
 							// Price Level
 							var placePriceDiv = $('#place_price_level');
-				
+
 							switch (place[0].price_level) {
 								case 1:
 									placePriceDiv.text('$');
@@ -166,20 +166,20 @@
 									placePriceDiv.text('$$');
 									break;
 								case 3:
-									placePriceDiv.text('$$$');	
+									placePriceDiv.text('$$$');
 									break;
 								case 4:
 									placePriceDiv.text('$$$$');
 									break;
-								default: 
+								default:
 									placePriceDiv.text(place[0].price_level);
-							}		
-							
+							}
+
 							// Opening hours
 							var placeHoursDiv = $('#place_opening_hours_open_now');
 							if (place[0].opening_hours.open_now == false) {
 								placeHoursDiv.text('Closed');
-							} 
+							}
 							else {
 								placeHoursDiv.text('Open')
 							}
@@ -192,13 +192,13 @@
 							var placePhotosDiv = $('#place_photos');
 							placePhotosDiv.text(place[0].photos[0].html_attributions[0]);
 
-							
 
 
-							
+
+
 
 						});
-								
+
 					})
 
 					map.fitBounds(bounds);
@@ -235,6 +235,9 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link smooth-link" href="#about_us">About Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link smooth-link" href="#signup">Sign Up</a>
 					</li>
 				</ul>
 			</div>
@@ -280,7 +283,7 @@
 	</section>
 
 	<section id="features">
-		
+
 		<div id="map"></div>
 
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyhril-xfIo67Xk81Y33Y5IHYeLZ2FzIo&libraries=places&callback=initAutocomplete"
@@ -383,7 +386,7 @@
 						</article>
 					</div>
 				</div>
-			</div> --> 
+			</div> -->
 
 			<!-- <div class="row align-items-center mt-5">
 				<div class="col-12 col-md-6">
@@ -477,7 +480,7 @@
 				</div>
 			</div>
 		</div>
-	</section> 
+	</section>
 
 
 	<section class = "padding bg-grey" id="about_us">
